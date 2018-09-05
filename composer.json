@@ -1,0 +1,23 @@
+{
+    "name": "webxloo/fcm",
+    "description": "Sends push notification via Firebase Cloud Messaging Server",
+    "authors": [
+        {
+            "name": "VasylDmytruk",
+            "email": "vasyl.dmytruk@xloo.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+        "google/apiclient": "^2.0"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^2.8"
+    },
+    "autoload": {
+        "psr-0": {
+            "fcm": "src/"
+        }
+    }
+}
