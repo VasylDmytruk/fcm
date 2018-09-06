@@ -8,7 +8,7 @@ namespace autoxloo\fcm;
 class FirebaseCloudMessaging
 {
     const PROJECT_MARK = '_PROJECT_MARK_';
-    const BASE_API_URL = 'https://fcm.googleapis.com/v1/projects/' . self::PROJECT_MARK . '/messages:send';
+    const BASE_API_URL = 'https://fcm.googleapis.com/v1/projects/_PROJECT_MARK_/messages:send';
     const GOOGLE_APPLICATION_CREDENTIALS_ENV = 'GOOGLE_APPLICATION_CREDENTIALS';
 
     /**

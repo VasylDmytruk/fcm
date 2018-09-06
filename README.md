@@ -13,6 +13,12 @@ Either run
 php composer.phar require --prefer-dist autoxloo/fcm "*"
 ```
 
+or
+
+```php
+composer require --prefer-dist autoxloo/fcm "*"
+```
+
 or add
 
 ```
