@@ -1,5 +1,5 @@
 {
-    "name": "webxloo/fcm",
+    "name": "autoxloo/fcm",
     "description": "Sends push notification via Firebase Cloud Messaging Server",
     "authors": [
         {
@@ -13,7 +13,6 @@
         "google/apiclient": "^2.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^2.8"
     },
     "autoload": {
         "psr-0": {
