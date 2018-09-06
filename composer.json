@@ -16,8 +16,8 @@
     "require-dev": {
     },
     "autoload": {
-        "psr-0": {
-            "fcm": "src/"
+        "psr-4": {
+            "autoxloo\\fcm\\": "src"
         }
     }
 }

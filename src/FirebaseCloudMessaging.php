@@ -1,6 +1,6 @@
 <?php
 
-namespace fcm;
+namespace autoxloo\fcm;
 
 /**
  * Class FirebaseCloudMessaging Firebase Cloud Messaging notification sender.
