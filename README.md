@@ -46,27 +46,60 @@ Sending push notification:
 
 ```php
 $fcm = new FirebaseCloudMessaging($projectId, $serviceAccountFilePath);
-$response = $fcm->send($message);   // $response is instance of \GuzzleHttp\Psr7\Response
+$response = $fcm->send($message);   // $message is instance of \autoxloo\fcm\message\Message
+                                    // $response is instance of [\GuzzleHttp\Psr7\Response](https://github.com/guzzle/psr7/blob/master/src/Response.php)
 ```
 
-Example of `$message` array:
+Complete example:
 
 ```php
-$message = [
-    'message' => [
-        'token' => 'fJKJAqP7LYw:APA91bEcbgWvOAxj',  // device token
-        'notification' => [
-            'title' => 'Some title',
-            'body' => 'Some body',
-        ],
-        'data' => [
-            'someKey' => 'SomeValue',
-        ],
-        'android' => [
-            'priority' => 'NORMAL',                 // or 'HIGH'
-        ]
-    ]
-];
+// initial data:
+$projectId = 'autoxloo';
+$serviceAccountFile = __DIR__ . '/service_account.json';
+$token = 'some device token';
+$name = 'Some name';
+$title = 'Some title';
+$body = 'Some body';
+$data = [
+    'some key1' => 'some value1',
+    'some key2' => 'some value2',
+]; 
+
+// sending push notification:
+
+$target = FCMFacade::createTargetToken($token);     // only target is required
+$notification = FCMFacade::createNotification($title, $body);
+$androidConfig = FCMFacade::createAndroidConfig([AndroidConfig::FIELD_PRIORITY => AndroidConfig::PRIORITY_HIGH]);
+
+$message = FCMFacade::createMessage();
+$message->setTarget($target)
+    ->setName($name)
+    ->setData($data)
+    ->setNotification($notification)
+    ->setAndroidConfig($androidConfig);
+
+$fcm = new FirebaseCloudMessaging($projectId, $serviceAccountFile);
+$response = $fcm->send($message);   // $response is instance of [\GuzzleHttp\Psr7\Response](https://github.com/guzzle/psr7/blob/master/src/Response.php)
 ```
 
->Note: message format will be changed!
+Or
+
+```php
+$messageConfig = [
+    // required one of: token, topic or condition
+    Message::FIELD_TOKEN => $token,     // or Message::FIELD_TOPIC => $topic or Message::FIELD_CONDITION => $condition
+
+    // not required values:
+    Message::FIELD_NAME => $name,
+    Message::FIELD_DATA => $data,
+    Message::FIELD_NOTIFICATION => FCMFacade::createNotification($title, $body),
+    Message::FIELD_ANDROID => FCMFacade::createAndroidConfig([
+        AndroidConfig::FIELD_PRIORITY => AndroidConfig::PRIORITY_HIGH
+   ]),
+];
+
+$message = FCMFacade::createMessage($messageConfig);
+
+$fcm = new FirebaseCloudMessaging($projectId, $serviceAccountFile);
+$response = $fcm->send($message);   // $response is instance of [\GuzzleHttp\Psr7\Response](https://github.com/guzzle/psr7/blob/master/src/Response.php)
+```

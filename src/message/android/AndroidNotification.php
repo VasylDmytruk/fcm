@@ -5,7 +5,8 @@ namespace autoxloo\fcm\message\android;
 use autoxloo\fcm\traits\FieldKeys;
 
 /**
- * Class AndroidNotification
+ * Class AndroidNotification Represents object AndroidNotification of FCM AndroidConfig.
+ * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#AndroidNotification
  */
 class AndroidNotification implements \JsonSerializable
 {
@@ -84,6 +85,7 @@ class AndroidNotification implements \JsonSerializable
      * @see https://goo.gl/MalYE3
      */
     protected $title_loc_args = [];
+
 
     /**
      * Specify data which should be serialized to JSON

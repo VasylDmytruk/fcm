@@ -29,14 +29,6 @@ class Notification implements \JsonSerializable
      */
     public function __construct($title, $body)
     {
-        if (!is_string($title)) {
-            throw new \InvalidArgumentException('Argument "$title" should be string');
-        }
-
-        if (!is_string($body)) {
-            throw new \InvalidArgumentException('Argument "$body" should be string');
-        }
-
         $this->title = $title;
         $this->body = $body;
     }
@@ -50,6 +42,14 @@ class Notification implements \JsonSerializable
      */
     public function jsonSerialize()
     {
+        if (!is_string($this->title)) {
+            throw new \UnexpectedValueException('Field "title" should be a string, not ' . gettype($this->title));
+        }
+
+        if (!is_string($this->body)) {
+            throw new \InvalidArgumentException('Field "body" should be a string, not ' . gettype($this->body));
+        }
+
         $jsonData = [
             self::FIELD_TITLE => $this->title,
             self::FIELD_BODY => $this->body,

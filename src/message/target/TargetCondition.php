@@ -20,18 +20,9 @@ class TargetCondition implements Target
      * TargetCondition constructor.
      *
      * @param string $condition Condition to send a message to, e.g. "'foo' in topics && 'bar' in topics".
-     *
-     * @throws EmptyValueException
      */
     public function __construct($condition)
     {
-        if (!is_string($condition)) {
-            throw new \InvalidArgumentException('Argument "$condition" should be a string');
-        }
-        if (empty($condition)) {
-            throw new EmptyValueException('Argument "$condition" can not be empty');
-        }
-
         $this->condition = $condition;
     }
 
@@ -39,9 +30,17 @@ class TargetCondition implements Target
      * Gets FCM target key (token, topic, condition) and it value.
      *
      * @return array Map (key: string, value: string)
+     * @throws EmptyValueException
      */
     public function getTargetKeyValue()
     {
+        if (!is_string($this->condition)) {
+            throw new \UnexpectedValueException('Field "condition" should be a string');
+        }
+        if (empty($this->condition)) {
+            throw new EmptyValueException('Field "condition" can not be empty');
+        }
+
         return [self::TARGET_KEY => $this->condition];
     }
 }

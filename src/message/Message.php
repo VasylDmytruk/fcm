@@ -3,10 +3,12 @@
 namespace autoxloo\fcm\message;
 
 use autoxloo\fcm\exceptions\EmptyValueException;
+use autoxloo\fcm\FCMFacade;
 use autoxloo\fcm\message\android\AndroidConfig;
 use autoxloo\fcm\message\apns\ApnsConfig;
-use autoxloo\fcm\message\web\WebpushConfig;
 use autoxloo\fcm\message\target\Target;
+use autoxloo\fcm\message\web\WebpushConfig;
+use autoxloo\fcm\traits\FieldKeys;
 
 /**
  * Class Message Represents Message to send by Firebase Cloud Messaging Service.
@@ -14,12 +16,19 @@ use autoxloo\fcm\message\target\Target;
  */
 class Message implements \JsonSerializable
 {
+    use FieldKeys;
+
     const FIELD_NAME = 'name';
     const FIELD_DATA = 'data';
     const FIELD_NOTIFICATION = 'notification';
     const FIELD_ANDROID = 'android';
     const FIELD_WEBPUSH = 'webpush';
     const FIELD_APNS = 'apns';
+    const FIELD_TOKEN = 'token';
+    const FIELD_TOPIC = 'topic';
+    const FIELD_CONDITION = 'condition';
+
+    const KEY_FIELD_MESSAGE = 'message';
 
     /**
      * @var string
@@ -45,6 +54,18 @@ class Message implements \JsonSerializable
      * @var ApnsConfig
      */
     protected $apnsConfig;
+    /**
+     * @var string Registration token to send a message to.
+     */
+    protected $token;
+    /**
+     * @var string Topic name to send a message to, e.g. "weather". Note: "/topics/" prefix should not be provided.
+     */
+    protected $topic;
+    /**
+     * @var string Condition to send a message to, e.g. "'foo' in topics && 'bar' in topics".
+     */
+    protected $condition;
     /**
      * @var Target
      */
@@ -87,13 +108,36 @@ class Message implements \JsonSerializable
             $jsonData[self::FIELD_APNS] = $this->apnsConfig;
         }
 
-        if ($this->target === null) {
-            throw new EmptyValueException('Field target can not be null');
-        }
-        $target = $this->target->getTargetKeyValue();
+        $target = $this->getTargetData();
         $jsonData = array_merge($jsonData, $target);
 
-        return $jsonData;
+        $jsonDataToReturn = [self::KEY_FIELD_MESSAGE => $jsonData];
+
+        return $jsonDataToReturn;
+    }
+
+    /**
+     * Gets initialized Target data.
+     *
+     * @return array Map (key: string, value: string)
+     *
+     * @throws EmptyValueException
+     */
+    protected function getTargetData()
+    {
+        if (!empty($this->token)) {
+            $this->target = FCMFacade::createTargetToken($this->token);
+        } elseif (!empty($this->topic)) {
+            $this->target = FCMFacade::createTargetTopic($this->topic);
+        } elseif (!empty($this->condition)) {
+            $this->target = FCMFacade::createTargetCondition($this->condition);
+        } elseif ($this->target === null) {
+            throw new EmptyValueException('Field target can not be null');
+        }
+
+        $targetData = $this->target->getTargetKeyValue();
+
+        return $targetData;
     }
 
     /**
@@ -158,6 +202,17 @@ class Message implements \JsonSerializable
     public function setApnsConfig($apnsConfig)
     {
         $this->apnsConfig = $apnsConfig;
+
+        return $this;
+    }
+
+    /**
+     * @param Target $target
+     * @return Message
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
 
         return $this;
     }

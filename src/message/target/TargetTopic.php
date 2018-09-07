@@ -26,23 +26,9 @@ class TargetTopic implements Target
      *
      * @param string $topic Topic name to send a message to, e.g. "weather".
      * >Note: "/topics/" prefix should not be provided.
-     *
-     * @throws EmptyValueException
      */
     public function __construct($topic)
     {
-        if (!is_string($topic)) {
-            throw new \InvalidArgumentException('Argument "$topic" should be a string');
-        }
-        if (empty($topic)) {
-            throw new EmptyValueException('Argument "$topic" can not be empty');
-        }
-        if (!preg_match(self::TOPIC_PATTERN, $topic)) {
-            throw new \InvalidArgumentException(
-                'Argument "$topic" should be string that matches the regular expression: "' . self::TOPIC_PATTERN . '"'
-            );
-        }
-
         $this->topic = $topic;
     }
 
@@ -50,9 +36,22 @@ class TargetTopic implements Target
      * Gets FCM target key (token, topic, condition) and it value.
      *
      * @return array Map (key: string, value: string)
+     * @throws EmptyValueException
      */
     public function getTargetKeyValue()
     {
+        if (!is_string($this->topic)) {
+            throw new \UnexpectedValueException('Field "topic" should be a string');
+        }
+        if (empty($this->topic)) {
+            throw new EmptyValueException('Field "topic" can not be empty');
+        }
+        if (!preg_match(self::TOPIC_PATTERN, $this->topic)) {
+            throw new \InvalidArgumentException(
+                'Field "topic" should be string that matches the regular expression: "' . self::TOPIC_PATTERN . '"'
+            );
+        }
+
         return [self::TARGET_KEY => $this->topic];
     }
 }
