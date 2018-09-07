@@ -10,7 +10,7 @@
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.5.0",
         "ext-json": "*",
         "google/apiclient": "^2.0"
     },
