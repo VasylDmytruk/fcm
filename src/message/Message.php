@@ -159,7 +159,7 @@ class Message implements \JsonSerializable
      * @param array $data
      * @return Message
      */
-    public function setData($data)
+    public function setData(array $data)
     {
         $this->data = $data;
 
@@ -170,7 +170,7 @@ class Message implements \JsonSerializable
      * @param Notification $notification
      * @return Message
      */
-    public function setNotification($notification)
+    public function setNotification(Notification $notification)
     {
         $this->notification = $notification;
 
@@ -181,7 +181,7 @@ class Message implements \JsonSerializable
      * @param AndroidConfig $androidConfig
      * @return Message
      */
-    public function setAndroidConfig($androidConfig)
+    public function setAndroidConfig(AndroidConfig $androidConfig)
     {
         $this->androidConfig = $androidConfig;
 
@@ -192,7 +192,7 @@ class Message implements \JsonSerializable
      * @param WebpushConfig $webpushConfig
      * @return Message
      */
-    public function setWebpushConfig($webpushConfig)
+    public function setWebpushConfig(WebpushConfig $webpushConfig)
     {
         $this->webpushConfig = $webpushConfig;
 
@@ -203,7 +203,7 @@ class Message implements \JsonSerializable
      * @param ApnsConfig $apnsConfig
      * @return Message
      */
-    public function setApnsConfig($apnsConfig)
+    public function setApnsConfig(ApnsConfig $apnsConfig)
     {
         $this->apnsConfig = $apnsConfig;
 
@@ -214,7 +214,7 @@ class Message implements \JsonSerializable
      * @param Target $target
      * @return Message
      */
-    public function setTarget($target)
+    public function setTarget(Target $target)
     {
         $this->target = $target;
 
