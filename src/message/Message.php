@@ -31,11 +31,15 @@ class Message implements \JsonSerializable
     const KEY_FIELD_MESSAGE = 'message';
 
     /**
-     * @var string
+     * @var string The identifier of the message sent.
+     * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.name
      */
     protected $name;
     /**
-     * @var array
+     * @var array Map (key: string, value: string)
+     * Arbitrary key/value payload.
+     * An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
+     * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.data
      */
     protected $data;
     /**
