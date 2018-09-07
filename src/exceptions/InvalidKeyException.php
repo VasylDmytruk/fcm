@@ -6,6 +6,7 @@ use Throwable;
 
 /**
  * Class InvalidKeyException
+ * @since 1.0.1
  */
 class InvalidKeyException extends \Exception
 {

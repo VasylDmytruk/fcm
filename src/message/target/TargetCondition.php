@@ -7,6 +7,7 @@ use autoxloo\fcm\exceptions\EmptyValueException;
 /**
  * Class TargetCondition
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.condition
+ * @since 1.0.1
  */
 class TargetCondition implements Target
 {

@@ -5,6 +5,7 @@ namespace autoxloo\fcm\message;
 /**
  * Class Notification Represents object Notification of FCM resource Message.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Notification
+ * @since 1.0.1
  */
 class Notification implements \JsonSerializable
 {

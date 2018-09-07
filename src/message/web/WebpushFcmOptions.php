@@ -6,6 +6,7 @@ use autoxloo\fcm\traits\FieldKeys;
 
 /**
  * Class WebpushFcmOptions
+ * @since 1.0.1
  */
 class WebpushFcmOptions implements \JsonSerializable
 {

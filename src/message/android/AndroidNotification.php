@@ -7,6 +7,7 @@ use autoxloo\fcm\traits\FieldKeys;
 /**
  * Class AndroidNotification Represents object AndroidNotification of FCM AndroidConfig.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#AndroidNotification
+ * @since 1.0.1
  */
 class AndroidNotification implements \JsonSerializable
 {

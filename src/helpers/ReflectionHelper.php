@@ -4,6 +4,7 @@ namespace autoxloo\fcm\helpers;
 
 /**
  * Class ReflectionHelper Helps to search constants in a class.
+ * @since 1.0.1
  */
 class ReflectionHelper
 {

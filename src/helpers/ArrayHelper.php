@@ -5,6 +5,7 @@ namespace autoxloo\fcm\helpers;
 /**
  * Class ArrayHelper Provides additional array functionality that you can use in your
  * application.
+ * @since 1.0.1
  */
 class ArrayHelper
 {

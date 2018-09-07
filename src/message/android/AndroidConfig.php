@@ -7,6 +7,7 @@ use autoxloo\fcm\traits\FieldKeys;
 /**
  * Class AndroidConfig Represents object AndroidConfig of FCM resource Message.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#AndroidConfig
+ * @since 1.0.1
  */
 class AndroidConfig implements \JsonSerializable
 {

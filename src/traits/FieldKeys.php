@@ -49,6 +49,7 @@ use autoxloo\fcm\helpers\ReflectionHelper;
  * ```
  * "{"title":"Some title", "body":"Some body"}"
  * ```
+ * @since 1.0.1
  */
 trait FieldKeys
 {

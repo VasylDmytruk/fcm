@@ -6,6 +6,7 @@ use Throwable;
 
 /**
  * Class EmptyValueException
+ * @since 1.0.1
  */
 class EmptyValueException extends \Exception
 {

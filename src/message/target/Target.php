@@ -6,6 +6,7 @@ use autoxloo\fcm\exceptions\EmptyValueException;
 
 /**
  * Interface Target
+ * @since 1.0.1
  */
 interface Target
 {

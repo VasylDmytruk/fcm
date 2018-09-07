@@ -16,6 +16,7 @@ use autoxloo\fcm\traits\FieldKeys;
 
 /**
  * Class FCMFasade Facade helps to create [[Message]] instance and it object fields.
+ * @since 1.0.1
  */
 class FCMFacade
 {
