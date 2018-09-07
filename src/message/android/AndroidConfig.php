@@ -71,6 +71,6 @@ class AndroidConfig implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->getJsonData();
+        return $this->getFieldsMap();
     }
 }

@@ -6,6 +6,7 @@ use autoxloo\fcm\exceptions\EmptyValueException;
 
 /**
  * Class TargetCondition
+ * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.condition
  */
 class TargetCondition implements Target
 {
@@ -15,6 +16,7 @@ class TargetCondition implements Target
      * @var string Condition to send a message to, e.g. "'foo' in topics && 'bar' in topics".
      */
     protected $condition;
+
 
     /**
      * TargetCondition constructor.

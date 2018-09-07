@@ -12,6 +12,7 @@ use autoxloo\fcm\message\target\TargetToken;
 use autoxloo\fcm\message\target\TargetTopic;
 use autoxloo\fcm\message\web\WebpushConfig;
 use autoxloo\fcm\message\web\WebpushFcmOptions;
+use autoxloo\fcm\traits\FieldKeys;
 
 /**
  * Class FCMFasade Facade helps to create [[Message]] instance and it object fields.
@@ -71,14 +72,15 @@ class FCMFacade
     }
 
     /**
-     * Creates object of `$objectClass`, configures by calling `[[\autoxloo\fcm\traits\FieldKeys::setFields()]]` method,
+     * Creates object of `$objectClass`, configures by calling
+     * `[[\autoxloo\fcm\traits\FieldKeys::setFields()]]` method of `$objectClass`,
      * sets to `$config[$notificationConfig]` new configured object of `$configClass`.
      * @see \autoxloo\fcm\traits\FieldKeys::setFields()
      *
      * @param string $objectClass Class name.
      * @param array $config Config of `$objectClass`.
      * @param string $configClass Notification class name.
-     * @param string $configClassKey Key to be used like `$config[$notificationKey] = $notification`.
+     * @param string $configClassKey Key to be used like `$config[$configClassKey] = $notification`.
      * @param array $configClassConfig Config of `$configClass`.
      *
      * @return object|mixed Returns new configured object of `$objectClass`.
@@ -93,6 +95,7 @@ class FCMFacade
         $configClassKey,
         array $configClassConfig
     ) {
+        /* @var $configObjcet FieldKeys */
         $configObjcet = new $configClass();
         $configObjcet->setFields($configClassConfig);
         $config[$configClassKey] = $configObjcet;
@@ -102,7 +105,7 @@ class FCMFacade
 
     /**
      * Creates new configured object of `$objectClass`.
-     * Configures by calling `[[\autoxloo\fcm\traits\FieldKeys::setFields()]]` method.
+     * Configures by calling `[[\autoxloo\fcm\traits\FieldKeys::setFields()]]` method of `$objectClass`.
      * @see \autoxloo\fcm\traits\FieldKeys::setFields()
      *
      * @param string $objectClass Class name.
@@ -115,6 +118,7 @@ class FCMFacade
      */
     protected static function createObjectFromConfig($objectClass, array $config)
     {
+        /* @var $object FieldKeys */
         $object = new $objectClass();
         $object->setFields($config);
 

@@ -6,10 +6,11 @@ use autoxloo\fcm\exceptions\InvalidKeyException;
 use autoxloo\fcm\helpers\ReflectionHelper;
 
 /**
- * Trait AllowedKeys Sets class fields. To set class fields class should has constants
- * which starts on FIELD_ with values of names of class field to include this field in json serialization
- * and in [[FieldKeys::setFields()]].
+ * Trait FieldKeys Sets class fields. To set class fields class should has constants
+ * which starts on FIELD_ with values of names of class field to use in [[FieldKeys::setFields()]]
+ * and in [[FieldKeys::getFieldsMap()]].
  * @see FieldKeys::setFields()
+ * @see FieldKeys::getFieldsMap()
  *
  * Example:
  *
@@ -23,13 +24,13 @@ use autoxloo\fcm\helpers\ReflectionHelper;
  *
  *       protected $title;
  *       protected $body;
- *       protected $empty;   // this field will not be json encoded
+ *       protected $empty;   // this field will not be set and return in FieldKeys::getFieldsMap()
  *
  *
  *       public function jsonSerialize()
  *       {
  *              // get only not empty fields
- *              return $this->getJsonData();
+ *              return $this->getFieldsMap();
  *       }
  * }
  *
@@ -99,7 +100,7 @@ trait FieldKeys
      * @return array Array of fields with not empty value.
      * @throws \ReflectionException
      */
-    protected function getJsonData()
+    protected function getFieldsMap()
     {
         $notEmptyFields = [];
         $allowedFieldKyes = $this->getAllowedFieldKeys();

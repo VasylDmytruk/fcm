@@ -79,7 +79,7 @@ $message->setTarget($target)
     ->setAndroidConfig($androidConfig);
 
 $fcm = new FirebaseCloudMessaging($projectId, $serviceAccountFile);
-$response = $fcm->send($message);   // $response is instance of [\GuzzleHttp\Psr7\Response](https://github.com/guzzle/psr7/blob/master/src/Response.php)
+$response = $fcm->send($message);   // $response is instance of \GuzzleHttp\Psr7\Response
 ```
 
 Or
@@ -101,5 +101,26 @@ $messageConfig = [
 $message = FCMFacade::createMessage($messageConfig);
 
 $fcm = new FirebaseCloudMessaging($projectId, $serviceAccountFile);
-$response = $fcm->send($message);   // $response is instance of [\GuzzleHttp\Psr7\Response](https://github.com/guzzle/psr7/blob/master/src/Response.php)
+$response = $fcm->send($message);   // $response is instance of \GuzzleHttp\Psr7\Response
 ```
+
+Target
+------
+
+You can use target one of:
+- `TargetToken`
+- `TargetTopic`
+- `TargetCondition`
+
+To create use facade:
+
+```php
+$targetToken = FCMFacade::createTargetToken('token');
+$targetTopic = FCMFacade::createTargetToken('topic');
+$targetCondition = FCMFacade::createTargetToken('condition');
+```
+
+See **Firebase** [Build App Server Send Requests](https://firebase.google.com/docs/cloud-messaging/send-message)
+for more details.
+
+>Note: TargetCondition and TargetTopic was not tested properly.

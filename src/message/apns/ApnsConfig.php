@@ -34,6 +34,7 @@ class ApnsConfig implements \JsonSerializable
      */
     protected $payload = [];
 
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -44,6 +45,6 @@ class ApnsConfig implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->getJsonData();
+        return $this->getFieldsMap();
     }
 }

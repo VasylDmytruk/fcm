@@ -2,6 +2,7 @@
 
 namespace autoxloo\fcm;
 
+use autoxloo\fcm\helpers\ArrayHelper;
 use autoxloo\fcm\message\Message;
 
 /**
@@ -9,6 +10,7 @@ use autoxloo\fcm\message\Message;
  */
 class FirebaseCloudMessaging
 {
+    // >Note: If you change value of PROJECT_MARK, change also in BASE_API_URL.
     const PROJECT_MARK = '_PROJECT_MARK_';
     const BASE_API_URL = 'https://fcm.googleapis.com/v1/projects/_PROJECT_MARK_/messages:send';
     const GOOGLE_APPLICATION_CREDENTIALS_ENV = 'GOOGLE_APPLICATION_CREDENTIALS';
@@ -30,12 +32,24 @@ class FirebaseCloudMessaging
      *
      * @param string $projectId Project ID of the Firebase project for your app.
      * This ID is available in the General project settings tab of the Firebase console.
-     * @see https://console.firebase.google.com/project/_/settings/general/
      *
      * @param string $serviceAccountFile Path to generated private key file in JSON format.
+     * @see https://console.firebase.google.com/project/_/settings/general/
+     *
+     * @param array $config In config array you can path these values which will override default values:
+     *
+     * ```
+     * [
+     *      'apiUrl' => 'https://fcm.googleapis.com/v1/projects/project-id/messages:send',
+     *      'googleApplicationCredentialsEnv' => 'GOOGLE_APPLICATION_CREDENTIALS',
+     *      'scopeMessaging' => 'https://www.googleapis.com/auth/firebase.messaging',
+     * ]
+     * ```
+     * Set these values only if google changed them.
+     *
      * @see https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk
      */
-    public function __construct($projectId, $serviceAccountFile)
+    public function __construct($projectId, $serviceAccountFile, array $config = [])
     {
         if (!$projectId) {
             throw new \InvalidArgumentException('Param "projectId" is required');
@@ -47,14 +61,22 @@ class FirebaseCloudMessaging
             );
         }
 
-        $this->apiUrl = str_replace(self::PROJECT_MARK, $projectId, self::BASE_API_URL);
+        $defaultApiUrl = str_replace(self::PROJECT_MARK, $projectId, self::BASE_API_URL);
+        $this->apiUrl = ArrayHelper::getValue($config, 'apiUrl', $defaultApiUrl);
 
-        $envToPut = self::GOOGLE_APPLICATION_CREDENTIALS_ENV . '=' . $serviceAccountFile;
+        $googleApplicationCredentialsEnv = ArrayHelper::getValue(
+            $config,
+            'googleApplicationCredentialsEnv',
+            self::GOOGLE_APPLICATION_CREDENTIALS_ENV
+        );
+        $envToPut = $googleApplicationCredentialsEnv . '=' . $serviceAccountFile;
         putenv($envToPut);
+
+        $scopeMessaging = ArrayHelper::getValue($config, 'scopeMessaging', self::SCOPE_MESSAGING);
 
         $client = new \Google_Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(self::SCOPE_MESSAGING);
+        $client->addScope($scopeMessaging);
 
         $this->httpClient = $client->authorize();
     }

@@ -6,6 +6,7 @@ use autoxloo\fcm\exceptions\EmptyValueException;
 
 /**
  * Class TargetTopic
+ * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.topic
  */
 class TargetTopic implements Target
 {
@@ -20,6 +21,7 @@ class TargetTopic implements Target
      * @var string Topic name to send a message to, e.g. "weather". Note: "/topics/" prefix should not be provided.
      */
     protected $topic;
+
 
     /**
      * TargetTopic constructor.

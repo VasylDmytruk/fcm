@@ -2,11 +2,11 @@
 
 namespace autoxloo\fcm\message\target;
 
-
 use autoxloo\fcm\exceptions\EmptyValueException;
 
 /**
  * Class TargetToken
+ * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.token
  */
 class TargetToken implements Target
 {
@@ -16,6 +16,7 @@ class TargetToken implements Target
      * @var string Registration token to send a message to.
      */
     protected $token;
+
 
     /**
      * TargetToken constructor.

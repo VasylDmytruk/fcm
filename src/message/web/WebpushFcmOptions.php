@@ -18,6 +18,7 @@ class WebpushFcmOptions implements \JsonSerializable
      */
     protected $link;
 
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -28,6 +29,6 @@ class WebpushFcmOptions implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->getJsonData();
+        return $this->getFieldsMap();
     }
 }
