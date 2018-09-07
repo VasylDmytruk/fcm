@@ -47,7 +47,7 @@ Sending push notification:
 ```php
 $fcm = new FirebaseCloudMessaging($projectId, $serviceAccountFilePath);
 $response = $fcm->send($message);   // $message is instance of \autoxloo\fcm\message\Message
-                                    // $response is instance of [\GuzzleHttp\Psr7\Response](https://github.com/guzzle/psr7/blob/master/src/Response.php)
+                                    // $response is instance of \GuzzleHttp\Psr7\Response
 ```
 
 Complete example:
