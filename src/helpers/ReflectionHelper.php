@@ -13,10 +13,12 @@ class ReflectionHelper
      *
      * @param string $class
      * @param null|string $prefix
+     *
      * @return array
+     *
      * @throws \ReflectionException
      */
-    public static function getConst($class, $prefix = null)
+    public static function getConsts($class, $prefix = null)
     {
         $reflection = new \ReflectionClass($class);
         $returnData = $reflection->getConstants();

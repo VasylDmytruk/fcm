@@ -1,24 +1,22 @@
 <?php
 
-namespace autoxloo\fcm\traits;
+namespace autoxloo\fcm\message;
 
 use autoxloo\fcm\exceptions\InvalidKeyException;
 use autoxloo\fcm\helpers\ReflectionHelper;
 
 /**
- * Trait FieldKeys Sets class fields. To set class fields class should has constants
- * which starts on FIELD_ with values of names of class field to use in [[FieldKeys::setFields()]]
- * and in [[FieldKeys::getFieldsMap()]].
- * @see FieldKeys::setFields()
- * @see FieldKeys::getFieldsMap()
+ * Class BaseFieldKeysObject Main purpose is to set class fields. To set class fields class should has constants
+ * which starts on FIELD_ with values of names of class field to use in [[BaseFieldKeysObject::setFields()]]
+ * and in [[BaseFieldKeysObject::getFieldsMap()]].
+ * @see BaseFieldKeysObject::setFields()
+ * @see BaseFieldKeysObject::getFieldsMap()
  *
  * Example:
  *
  * ```
- * class Notification implements \JsonSerializable
+ * class Notification extends BaseFieldKeysObject implements \JsonSerializable
  * {
- *       use \autoxloo\fcm\traits\FieldKeys;
- *
  *       const FIELD_TITLE = 'title';
  *       const FIELD_BODY = 'body';
  *
@@ -51,7 +49,7 @@ use autoxloo\fcm\helpers\ReflectionHelper;
  * ```
  * @since 1.0.1
  */
-trait FieldKeys
+abstract class BaseFieldKeysObject
 {
     /**
      * @var array Stores allowed keys
@@ -89,7 +87,7 @@ trait FieldKeys
     protected function getAllowedFieldKeys()
     {
         if (!$this->_allowedFieldKeys) {
-            $this->_allowedFieldKeys = ReflectionHelper::getConsts(__CLASS__, 'FIELD_');
+            $this->_allowedFieldKeys = ReflectionHelper::getConsts(static::class, 'FIELD_');
         }
 
         return $this->_allowedFieldKeys;

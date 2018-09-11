@@ -12,10 +12,9 @@ use autoxloo\fcm\message\target\TargetToken;
 use autoxloo\fcm\message\target\TargetTopic;
 use autoxloo\fcm\message\web\WebpushConfig;
 use autoxloo\fcm\message\web\WebpushFcmOptions;
-use autoxloo\fcm\traits\FieldKeys;
 
 /**
- * Class FCMFasade Facade helps to create [[Message]] instance and it object fields.
+ * Class FCMFacade Facade helps to create [[Message]] instance and it object fields.
  * @since 1.0.1
  */
 class FCMFacade
@@ -66,64 +65,13 @@ class FCMFacade
      *
      * @return Notification New initialized instance.
      * @see Notification
+     *
+     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      */
     public static function createNotification($title, $body)
     {
         return new Notification($title, $body);
-    }
-
-    /**
-     * Creates object of `$objectClass`, configures by calling
-     * `[[\autoxloo\fcm\traits\FieldKeys::setFields()]]` method of `$objectClass`,
-     * sets to `$config[$notificationConfig]` new configured object of `$configClass`.
-     * @see \autoxloo\fcm\traits\FieldKeys::setFields()
-     *
-     * @param string $objectClass Class name.
-     * @param array $config Config of `$objectClass`.
-     * @param string $configClass Notification class name.
-     * @param string $configClassKey Key to be used like `$config[$configClassKey] = $notification`.
-     * @param array $configClassConfig Config of `$configClass`.
-     *
-     * @return object|mixed Returns new configured object of `$objectClass`.
-     *
-     * @throws \ReflectionException
-     * @throws exceptions\InvalidKeyException
-     */
-    protected static function createObjectFromConfigAndNotification(
-        $objectClass,
-        array $config,
-        $configClass,
-        $configClassKey,
-        array $configClassConfig
-    ) {
-        /* @var $configObjcet FieldKeys */
-        $configObjcet = new $configClass();
-        $configObjcet->setFields($configClassConfig);
-        $config[$configClassKey] = $configObjcet;
-
-        return static::createObjectFromConfig($objectClass, $config);
-    }
-
-    /**
-     * Creates new configured object of `$objectClass`.
-     * Configures by calling `[[\autoxloo\fcm\traits\FieldKeys::setFields()]]` method of `$objectClass`.
-     * @see \autoxloo\fcm\traits\FieldKeys::setFields()
-     *
-     * @param string $objectClass Class name.
-     * @param array $config Config of `$objectClass`.
-     *
-     * @return object|mixed Returns new configured object of `$objectClass`.
-     *
-     * @throws \ReflectionException
-     * @throws exceptions\InvalidKeyException
-     */
-    protected static function createObjectFromConfig($objectClass, array $config)
-    {
-        /* @var $object FieldKeys */
-        $object = new $objectClass();
-        $object->setFields($config);
-
-        return $object;
     }
 
     /**
@@ -143,13 +91,18 @@ class FCMFacade
      */
     public static function createAndroidConfig(array $androidConfig, array $androidNotificationConfig = [])
     {
-        return static::createObjectFromConfigAndNotification(
-            AndroidConfig::class,
-            $androidConfig,
-            AndroidNotification::class,
-            AndroidConfig::FIELD_NOTIFICATION,
-            $androidNotificationConfig
-        );
+        $androidConfigToSet = $androidConfig;
+
+        if (!empty($androidNotificationConfig)) {
+            $androidNotification = new AndroidNotification();
+            $androidNotification->setFields($androidNotificationConfig);
+            $androidConfigToSet[AndroidConfig::FIELD_NOTIFICATION] = $androidNotification;
+        }
+
+        $android = new AndroidConfig();
+        $android->setFields($androidConfigToSet);
+
+        return $android;
     }
 
     /**
@@ -169,19 +122,24 @@ class FCMFacade
      */
     public static function createWebpushConfig(array $webpushConfig, array $webpushFcmOptionsConf = [])
     {
-        return static::createObjectFromConfigAndNotification(
-            WebpushConfig::class,
-            $webpushConfig,
-            WebpushConfig::FILED_FCM_OPTIONS,
-            WebpushFcmOptions::class,
-            $webpushFcmOptionsConf
-        );
+        $webpushConfigToSet = $webpushConfig;
+
+        if (!empty($webpushFcmOptionsConf)) {
+            $webpushFcmOptions = new WebpushFcmOptions();
+            $webpushFcmOptions->setFields($webpushFcmOptionsConf);
+            $webpushConfigToSet[WebpushConfig::FILED_FCM_OPTIONS] = $webpushFcmOptions;
+        }
+
+        $webpush = new WebpushConfig();
+        $webpush->setFields($webpushConfigToSet);
+
+        return $webpush;
     }
 
     /**
      * Creates new ApnsConfig instance and sets it fields.
      *
-     * @param array $apnsConfig Key value of ApnsConfig fields. Keys are constant starting on FIELD_.
+     * @param array $apnsConfig Key value of ApnsConfig fields. Keys are constant starting on ApnsConfig::FIELD_.
      * @see ApnsConfig
      *
      * @return ApnsConfig New initialized instance.
@@ -191,7 +149,10 @@ class FCMFacade
      */
     public static function createApnsConfig(array $apnsConfig)
     {
-        return static::createObjectFromConfig(ApnsConfig::class, $apnsConfig);
+        $apns = new ApnsConfig();
+        $apns->setFields($apnsConfig);
+
+        return $apns;
     }
 
     /**
@@ -200,6 +161,7 @@ class FCMFacade
      * @param string $token
      *
      * @return TargetToken New initialized instance.
+     * @throws exceptions\EmptyValueException
      */
     public static function createTargetToken($token)
     {
@@ -212,6 +174,7 @@ class FCMFacade
      * @param string $topic Topic name to send a message to.
      *
      * @return TargetTopic() New initialized instance.
+     * @throws exceptions\EmptyValueException
      */
     public static function createTargetTopic($topic)
     {
@@ -224,6 +187,7 @@ class FCMFacade
      * @param string $condition Condition to send a message to.
      *
      * @return TargetCondition() New initialized instance.
+     * @throws exceptions\EmptyValueException
      */
     public static function createTargetCondition($condition)
     {

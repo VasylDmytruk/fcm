@@ -8,17 +8,14 @@ use autoxloo\fcm\message\android\AndroidConfig;
 use autoxloo\fcm\message\apns\ApnsConfig;
 use autoxloo\fcm\message\target\Target;
 use autoxloo\fcm\message\web\WebpushConfig;
-use autoxloo\fcm\traits\FieldKeys;
 
 /**
  * Class Message Represents Message to send by Firebase Cloud Messaging Service.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
  * @since 1.0.1
  */
-class Message implements \JsonSerializable
+class Message extends BaseFieldKeysObject implements \JsonSerializable
 {
-    use FieldKeys;
-
     const FIELD_NAME = 'name';
     const FIELD_DATA = 'data';
     const FIELD_NOTIFICATION = 'notification';

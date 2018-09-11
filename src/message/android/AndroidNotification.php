@@ -2,17 +2,15 @@
 
 namespace autoxloo\fcm\message\android;
 
-use autoxloo\fcm\traits\FieldKeys;
+use autoxloo\fcm\message\BaseFieldKeysObject;
 
 /**
  * Class AndroidNotification Represents object AndroidNotification of FCM AndroidConfig.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#AndroidNotification
  * @since 1.0.1
  */
-class AndroidNotification implements \JsonSerializable
+class AndroidNotification extends BaseFieldKeysObject implements \JsonSerializable
 {
-    use FieldKeys;
-
     const FIELD_TITLE = 'title';
     const FIELD_BODY = 'body';
     const FIELD_ICON = 'icon';

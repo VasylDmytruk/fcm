@@ -2,17 +2,15 @@
 
 namespace autoxloo\fcm\message\android;
 
-use autoxloo\fcm\traits\FieldKeys;
+use autoxloo\fcm\message\BaseFieldKeysObject;
 
 /**
  * Class AndroidConfig Represents object AndroidConfig of FCM resource Message.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#AndroidConfig
  * @since 1.0.1
  */
-class AndroidConfig implements \JsonSerializable
+class AndroidConfig extends BaseFieldKeysObject implements \JsonSerializable
 {
-    use FieldKeys;
-
     const FIELD_COLLAPSE_KEY = 'collapse_key';
     const FIELD_PRIORITY = 'priority';
     const FIELD_TTL = 'ttl';

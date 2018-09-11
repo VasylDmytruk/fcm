@@ -2,16 +2,14 @@
 
 namespace autoxloo\fcm\message\web;
 
-use autoxloo\fcm\traits\FieldKeys;
+use autoxloo\fcm\message\BaseFieldKeysObject;
 
 /**
  * Class WebpushFcmOptions
  * @since 1.0.1
  */
-class WebpushFcmOptions implements \JsonSerializable
+class WebpushFcmOptions extends BaseFieldKeysObject implements \JsonSerializable
 {
-    use FieldKeys;
-
     const FIELD_LINK = 'link';
 
     /**

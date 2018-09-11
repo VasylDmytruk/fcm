@@ -2,17 +2,15 @@
 
 namespace autoxloo\fcm\message\apns;
 
-use autoxloo\fcm\traits\FieldKeys;
+use autoxloo\fcm\message\BaseFieldKeysObject;
 
 /**
  * Class ApnsConfig Represents object ApnsConfig of FCM resource Message.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#ApnsConfig
  * @since 1.0.1
  */
-class ApnsConfig implements \JsonSerializable
+class ApnsConfig extends BaseFieldKeysObject implements \JsonSerializable
 {
-    use FieldKeys;
-
     const FIELD_HEADERS = 'headers';
     const FIELD_PAYLOAD = 'payload';
 

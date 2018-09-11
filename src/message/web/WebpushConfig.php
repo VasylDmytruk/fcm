@@ -2,17 +2,15 @@
 
 namespace autoxloo\fcm\message\web;
 
-use autoxloo\fcm\traits\FieldKeys;
+use autoxloo\fcm\message\BaseFieldKeysObject;
 
 /**
  * Class WebpushConfig Represents object WebpushConfig of FCM resource Message.
  * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#WebpushConfig
  * @since 1.0.1
  */
-class WebpushConfig implements \JsonSerializable
+class WebpushConfig extends BaseFieldKeysObject implements \JsonSerializable
 {
-    use FieldKeys;
-
     const FILED_HEADERS = 'headers';
     const FILED_DATA = 'data';
     const FILED_NOTIFICATION = 'notification';

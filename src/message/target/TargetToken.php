@@ -23,9 +23,19 @@ class TargetToken implements Target
      * TargetToken constructor.
      *
      * @param string $token Registration token to send a message to.
+     *
+     * @throws EmptyValueException
+     * @throws \UnexpectedValueException
      */
     public function __construct($token)
     {
+        if (!is_string($token)) {
+            throw new \UnexpectedValueException('Field "token" has to be a string');
+        }
+        if (empty($token)) {
+            throw new EmptyValueException('Field "token" can not be empty');
+        }
+
         $this->token = $token;
     }
 
@@ -33,17 +43,9 @@ class TargetToken implements Target
      * Gets FCM target key (token, topic, condition) and it value.
      *
      * @return array Map (key: string, value: string)
-     * @throws EmptyValueException
      */
     public function getTargetKeyValue()
     {
-        if (!is_string($this->token)) {
-            throw new \UnexpectedValueException('Field "token" should be a string');
-        }
-        if (empty($this->token)) {
-            throw new EmptyValueException('Field "token" can not be empty');
-        }
-
         return [self::TARGET_KEY => $this->token];
     }
 }

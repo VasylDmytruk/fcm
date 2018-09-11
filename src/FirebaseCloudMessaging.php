@@ -10,6 +10,10 @@ use autoxloo\fcm\message\Message;
  */
 class FirebaseCloudMessaging
 {
+    const KEY_API_URL = 'apiUrl';
+    const KEY_GOOGLE_APPLICATION_CREDENTIALS_ENV = 'googleApplicationCredentialsEnv';
+    const KEY_SCOPE_MESSAGING = 'scopeMessaging';
+
     // >Note: If you change value of PROJECT_MARK, change also in BASE_API_URL.
     const PROJECT_MARK = '_PROJECT_MARK_';
     const BASE_API_URL = 'https://fcm.googleapis.com/v1/projects/_PROJECT_MARK_/messages:send';
@@ -40,9 +44,9 @@ class FirebaseCloudMessaging
      *
      * ```
      * [
-     *      'apiUrl' => 'https://fcm.googleapis.com/v1/projects/project-id/messages:send',
-     *      'googleApplicationCredentialsEnv' => 'GOOGLE_APPLICATION_CREDENTIALS',
-     *      'scopeMessaging' => 'https://www.googleapis.com/auth/firebase.messaging',
+     *      FirebaseCloudMessaging::KEY_API_URL => 'https://fcm.googleapis.com/v1/projects/project-id/messages:send',
+     *      FirebaseCloudMessaging::KEY_GOOGLE_APPLICATION_CREDENTIALS_ENV => 'GOOGLE_APPLICATION_CREDENTIALS',
+     *      FirebaseCloudMessaging::KEY_SCOPE_MESSAGING => 'https://www.googleapis.com/auth/firebase.messaging',
      * ]
      * ```
      * Set these values only if google changed them.
@@ -57,22 +61,22 @@ class FirebaseCloudMessaging
 
         if (!file_exists($serviceAccountFile)) {
             throw new \InvalidArgumentException(
-                "Param 'serviceAccountFile' ({$serviceAccountFile}) should be valid path to service account file"
+                "Param 'serviceAccountFile' ({$serviceAccountFile}) has to be valid path to service account file"
             );
         }
 
         $defaultApiUrl = str_replace(self::PROJECT_MARK, $projectId, self::BASE_API_URL);
-        $this->apiUrl = ArrayHelper::getValue($config, 'apiUrl', $defaultApiUrl);
+        $this->apiUrl = ArrayHelper::getValue($config, self::KEY_API_URL, $defaultApiUrl);
 
         $googleApplicationCredentialsEnv = ArrayHelper::getValue(
             $config,
-            'googleApplicationCredentialsEnv',
+            self::KEY_GOOGLE_APPLICATION_CREDENTIALS_ENV,
             self::GOOGLE_APPLICATION_CREDENTIALS_ENV
         );
         $envToPut = $googleApplicationCredentialsEnv . '=' . $serviceAccountFile;
         putenv($envToPut);
 
-        $scopeMessaging = ArrayHelper::getValue($config, 'scopeMessaging', self::SCOPE_MESSAGING);
+        $scopeMessaging = ArrayHelper::getValue($config, self::SCOPE_MESSAGING, self::SCOPE_MESSAGING);
 
         $client = new \Google_Client();
         $client->useApplicationDefaultCredentials();
