@@ -2,6 +2,8 @@ Firebase Cloud Messaging
 ========================
 Sends push notification via Firebase Cloud Messaging Server
 
+>Note: This package is not supported properly
+
 Installation
 ------------
 
