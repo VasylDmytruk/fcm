@@ -117,9 +117,9 @@ You can use target one of:
 To create use facade:
 
 ```php
-$targetToken = FCMFacade::createTargetToken('token');
-$targetTopic = FCMFacade::createTargetToken('topic');
-$targetCondition = FCMFacade::createTargetToken('condition');
+$targetToken = FCMFacade::createTargetToken('some token');
+$targetTopic = FCMFacade::createTargetTopic('some topic');
+$targetCondition = FCMFacade::createTargetCondition('some condition');
 ```
 
 See **Firebase** [Build App Server Send Requests](https://firebase.google.com/docs/cloud-messaging/send-message)
