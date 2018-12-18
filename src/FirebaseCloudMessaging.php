@@ -26,7 +26,7 @@ class FirebaseCloudMessaging
      */
     protected $apiUrl;
     /**
-     * @var
+     * @var \GuzzleHttp\ClientInterface|\GuzzleHttp\Client
      */
     protected $httpClient;
 
@@ -95,6 +95,25 @@ class FirebaseCloudMessaging
     public function send(Message $message)
     {
         $response = $this->httpClient->post(
+            $this->apiUrl,
+            [
+                'body' => json_encode($message),
+            ]
+        );
+
+        return $response;
+    }
+
+    /**
+     * Sends asynchronously push notification.
+     *
+     * @param Message $message Request body to send push notification.
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendAsync(Message $message)
+    {
+        $response = $this->httpClient->sendAsync(
             $this->apiUrl,
             [
                 'body' => json_encode($message),
