@@ -113,7 +113,7 @@ class FirebaseCloudMessaging
      */
     public function sendAsync(Message $message)
     {
-        $response = $this->httpClient->sendAsync(
+        $response = $this->httpClient->postAsync(
             $this->apiUrl,
             [
                 'body' => json_encode($message),
