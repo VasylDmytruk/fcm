@@ -33,10 +33,10 @@ class Notification implements \JsonSerializable
      */
     public function __construct($title, $body)
     {
-        if (!is_string($title)) {
+        if (!empty($title) && !is_string($title)) {
             throw new \UnexpectedValueException('Field "title" has to be a string, not ' . gettype($this->title));
         }
-        if (!is_string($body)) {
+        if (!empty($body) && !is_string($body)) {
             throw new \InvalidArgumentException('Field "body" has to be a string, not ' . gettype($this->body));
         }
 
