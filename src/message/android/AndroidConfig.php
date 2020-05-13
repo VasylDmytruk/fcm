@@ -18,8 +18,8 @@ class AndroidConfig extends BaseFieldKeysObject implements \JsonSerializable
     const FIELD_DATA = 'data';
     const FIELD_NOTIFICATION = 'notification';
 
-    const PRIORITY_NORMAL = 'NORMAL';
-    const PRIORITY_HIGH = 'HIGH';
+    const PRIORITY_NORMAL = 'normal';
+    const PRIORITY_HIGH = 'high';
 
     /**
      * @var string An identifier of a group of messages that can be collapsed,
